@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "C#: DungeonSlime Debug",
+        "name": "C#: DungeonSlime.DirectX Debug",
         "type": "dotnet",
         "request": "launch",
-        "projectPath": "${workspaceFolder}/DungeonSlime.csproj"
+        "projectPath": "${workspaceFolder}/DungeonSlime.DirectX.csproj"
       }
     ],
   }

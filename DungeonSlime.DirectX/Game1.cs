@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGameLibrary;
 
-namespace DungeonSlime;
+namespace DungeonSlime.DirectX;
 
 public class Game1 : Core
 {
