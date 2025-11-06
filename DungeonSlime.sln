@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonSlime.DesktopGL", "DungeonSlime\DungeonSlime.DesktopGL.csproj", "{ED6B5FFA-0E1C-4BCE-D08B-69CC2DE9576F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonSlime.DesktopGL", "DungeonSlime.DesktopGL\DungeonSlime.DesktopGL.csproj", "{ED6B5FFA-0E1C-4BCE-D08B-69CC2DE9576F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGameLibrary", "MonoGameLibrary\MonoGameLibrary.csproj", "{E1080EE2-D740-492D-B022-0DEA3AF03F60}"
 EndProject
