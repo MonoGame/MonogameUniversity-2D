@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XnaContent>
+  <Asset Type="ContentTypes.TextureAtlasData">
+    <Texture>images/atlas</Texture>
+    <Regions>
+      <Item>
+        <Name>slime</Name>
+        <X>0</X>
+        <Y>0</Y>
+        <Width>20</Width>
+        <Height>20</Height>
+      </Item>
+      <Item>
+        <Name>bat</Name>
+        <X>20</X>
+        <Y>0</Y>
+        <Width>20</Width>
+        <Height>20</Height>
+      </Item>
+    </Regions>
+  </Asset>
+</XnaContent>
