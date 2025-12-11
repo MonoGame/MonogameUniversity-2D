@@ -4,19 +4,72 @@
     <Texture>images/atlas</Texture>
     <Regions>
       <Item>
-        <Name>slime</Name>
+        <Name>slime-1</Name>
         <X>0</X>
         <Y>0</Y>
         <Width>20</Width>
         <Height>20</Height>
       </Item>
       <Item>
-        <Name>bat</Name>
+        <Name>slime-2</Name>
+        <X>0</X>
+        <Y>20</Y>
+        <Width>20</Width>
+        <Height>20</Height>
+      </Item>
+      <Item>
+        <Name>bat-1</Name>
         <X>20</X>
         <Y>0</Y>
         <Width>20</Width>
         <Height>20</Height>
       </Item>
+      <Item>
+        <Name>bat-2</Name>
+        <X>20</X>
+        <Y>20</Y>
+        <Width>20</Width>
+        <Height>20</Height>
+      </Item>
+      <Item>
+        <Name>bat-3</Name>
+        <X>40</X>
+        <Y>0</Y>
+        <Width>20</Width>
+        <Height>20</Height>
+      </Item>
     </Regions>
+    <Animations>
+      <Item>
+        <Name>slime-animation</Name>
+        <Delay>400</Delay>
+        <Frames>
+          <Item>
+            <Region>slime-1</Region>
+          </Item>
+          <Item>
+            <Region>slime-2</Region>
+          </Item>          
+        </Frames>
+      </Item>
+      <Item>
+        <Name>bat-animation</Name>
+        <Delay>100</Delay>
+        <Frames>
+          <Item>
+            <Region>bat-1</Region>
+          </Item>
+          <Item>
+            <Region>bat-2</Region>
+          </Item>          
+          <Item>
+            <Region>bat-1</Region>
+          </Item>          
+          <Item>
+            <Region>bat-3</Region>
+          </Item>          
+        </Frames>
+      </Item>      
+    </Animations>
   </Asset>
 </XnaContent>
