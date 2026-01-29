@@ -3,6 +3,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MonoGameLibrary.Input;
 
+/// <summary>
+/// Keys
+/// DPAD move
+/// WASD Move
+/// Button A speed
+/// Space Speed
+/// P / Button Y = Pause/Play Music
+/// </summary>
 public class InputManager
 {
     /// <summary>
@@ -89,5 +97,11 @@ public class InputManager
                 gamePadOne.IsButtonDown(Buttons.DPadDown);
     }
 
+    public bool PausePlayMusic()
+    {
+        var gamePadOne = GamePads[(int)PlayerIndex.One];
+
+        return Keyboard.WasKeyJustPressed(Keys.P) || gamePadOne.IsButtonDown(Buttons.Start);
+    }
 }
 
