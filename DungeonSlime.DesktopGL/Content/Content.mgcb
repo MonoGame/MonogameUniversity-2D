@@ -41,6 +41,9 @@
 /processorParam:TextureFormat=Color
 /build:images/logo.png
 
+#begin images/tilemap-definition.xml
+/copy:images/tilemap-definition.xml
+
 #begin TextureAtlasXML.xml
 /importer:XmlImporter
 /processor:PassThroughProcessor
