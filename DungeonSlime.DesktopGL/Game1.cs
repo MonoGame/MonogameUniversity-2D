@@ -44,8 +44,8 @@ public class Game1 : Core
 
     // The sound effect to play when the slime eats a bat.
     private SoundEffect _collectSoundEffect;
-    private Song theme;
-    private bool isPlayingMusic = false;
+    // The background theme song
+    private Song _themeSong;
 
     public Game1() : base("Dungeon Slime", 1280, 720, false)
     {
@@ -75,6 +75,9 @@ public class Game1 : Core
 
         // Assign the initial random velocity to the bat.
         AssignRandomBatVelocity();
+
+        // Start playing the background music.
+        Audio.PlaySong(_themeSong);
     }
 
     protected override void LoadContent()
@@ -102,20 +105,8 @@ public class Game1 : Core
         // Load the collect sound effect
         _collectSoundEffect = Content.Load<SoundEffect>("audio/collect");
 
-        // Load the background theme music
-        theme = Content.Load<Song>("audio/theme");
-
-        // Ensure media player is not already playing on device, if so, stop it
-        if (MediaPlayer.State == MediaState.Playing)
-        {
-            MediaPlayer.Stop();
-        }
-
-        // Play the background theme music.
-        MediaPlayer.Play(theme);
-        isPlayingMusic = true;
-        // Set the theme music to repeat.
-        MediaPlayer.IsRepeating = true;
+        // Load the background theme music.
+        _themeSong = Content.Load<Song>("audio/theme");
     }
 
     protected override void Update(GameTime gameTime)
@@ -215,8 +206,8 @@ public class Game1 : Core
         {
             normal.Normalize();
             _batVelocity = Vector2.Reflect(_batVelocity, normal);
-            // Play the bounce sound effect
-            _bounceSoundEffect.Play();
+            // Play the bounce sound effect.
+            Audio.PlaySoundEffect(_bounceSoundEffect);
         }
 
         _batPosition = newBatPosition;
@@ -234,8 +225,8 @@ public class Game1 : Core
             // Assign a new random velocity to the bat
             AssignRandomBatVelocity();
 
-            // Play the collect sound effect
-            _collectSoundEffect.Play();
+            // Play the collect sound effect.
+            Audio.PlaySoundEffect(_collectSoundEffect);
         }
 
         base.Update(gameTime);
@@ -288,19 +279,24 @@ public class Game1 : Core
             _slimePosition.X += speed;
         }
 
+        // P or Start
         if (Input.PausePlayMusic())
         {
-            // Ensure media player is not already playing on device, if so, stop it
-            if (MediaPlayer.State == MediaState.Playing)
-            {
-                MediaPlayer.Stop();
-            }
-            isPlayingMusic = !isPlayingMusic;
-            // Play the background theme music.
-            if (isPlayingMusic)
-            {
-                MediaPlayer.Play(theme);
-            }
+            Audio.ToggleMute();
+        }
+
+        // If the + button is pressed, increase the volume.
+        if (Input.AudioUp())
+        {
+            Audio.SongVolume += 0.1f;
+            Audio.SoundEffectVolume += 0.1f;
+        }
+
+        // If the - button was pressed, decrease the volume.
+        if (Input.AudioDown())
+        {
+            Audio.SongVolume -= 0.1f;
+            Audio.SoundEffectVolume -= 0.1f;
         }
     }
 

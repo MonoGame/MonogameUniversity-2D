@@ -103,5 +103,19 @@ public class InputManager
 
         return Keyboard.WasKeyJustPressed(Keys.P) || gamePadOne.IsButtonDown(Buttons.Start);
     }
+
+    public bool AudioUp()
+    {
+        var gamePadOne = GamePads[(int)PlayerIndex.One];
+
+        return Keyboard.WasKeyJustPressed(Keys.OemPlus) || gamePadOne.IsButtonDown(Buttons.DPadUp);
+    }
+
+    public bool AudioDown()
+    {
+        var gamePadOne = GamePads[(int)PlayerIndex.One];
+        // Don't to this"!
+        return Keyboard.WasKeyJustPressed(Keys.OemMinus) || gamePadOne.IsButtonDown(Buttons.DPadDown);
+    }
 }
 
