@@ -32,12 +32,21 @@
 /processorParam:Quality=Best
 /build:audio/theme.ogg
 
+#begin audio/ui.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/ui.wav
+
 #begin fonts/04B_30_5x.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:fonts/04B_30_5x.spritefont
+
+#begin fonts/04b_30.fnt
+/copy:fonts/04b_30.fnt
 
 #begin fonts/04B_30.spritefont
 /importer:FontDescriptionImporter
@@ -60,6 +69,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:images/atlas.png
+
+#begin images/background-pattern.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:images/background-pattern.png
 
 #begin images/logo.png
 /importer:TextureImporter

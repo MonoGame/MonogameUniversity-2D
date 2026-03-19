@@ -5,38 +5,87 @@
     <Regions>
       <Item>
         <Name>slime-1</Name>
-        <X>0</X>
+        <X>340</X>
         <Y>0</Y>
         <Width>20</Width>
         <Height>20</Height>
       </Item>
       <Item>
         <Name>slime-2</Name>
-        <X>0</X>
+        <X>340</X>
         <Y>20</Y>
         <Width>20</Width>
         <Height>20</Height>
       </Item>
       <Item>
         <Name>bat-1</Name>
-        <X>20</X>
-        <Y>0</Y>
+        <X>340</X>
+        <Y>40</Y>
         <Width>20</Width>
         <Height>20</Height>
       </Item>
       <Item>
         <Name>bat-2</Name>
-        <X>20</X>
-        <Y>20</Y>
+        <X>340</X>
+        <Y>60</Y>
         <Width>20</Width>
         <Height>20</Height>
       </Item>
       <Item>
         <Name>bat-3</Name>
-        <X>40</X>
+        <X>360</X>
         <Y>0</Y>
         <Width>20</Width>
         <Height>20</Height>
+      </Item>
+      <Item>
+        <Name>unfocused-button</Name>
+        <X>259</X>
+        <Y>80</Y>
+        <Width>65</Width>
+        <Height>14</Height>
+      </Item>
+      <Item>
+        <Name>focused-button-1</Name>
+        <X>259</X>
+        <Y>94</Y>
+        <Width>65</Width>
+        <Height>14</Height>
+      </Item>
+      <Item>
+        <Name>focused-button-2</Name>
+        <X>259</X>
+        <Y>109</Y>
+        <Width>65</Width>
+        <Height>14</Height>
+      </Item>
+      <Item>
+        <Name>panel-background</Name>
+        <X>324</X>
+        <Y>97</Y>
+        <Width>15</Width>
+        <Height>15</Height>
+      </Item>
+      <Item>
+        <Name>slider-off-background</Name>
+        <X>341</X>
+        <Y>96</Y>
+        <Width>11</Width>
+        <Height>10</Height>
+      </Item>
+      <Item>
+        <Name>slider-middle-background</Name>
+        <X>345</X>
+        <Y>81</Y>
+        <Width>3</Width>
+        <Height>3</Height>
+      </Item>
+      <Item>
+        <Name>slider-max-background</Name>
+        <X>354</X>
+        <Y>96</Y>
+        <Width>11</Width>
+        <Height>10</Height>
       </Item>
     </Regions>
     <Animations>
@@ -49,7 +98,7 @@
           </Item>
           <Item>
             <Region>slime-2</Region>
-          </Item>          
+          </Item>
         </Frames>
       </Item>
       <Item>
@@ -61,15 +110,27 @@
           </Item>
           <Item>
             <Region>bat-2</Region>
-          </Item>          
+          </Item>
           <Item>
             <Region>bat-1</Region>
-          </Item>          
+          </Item>
           <Item>
             <Region>bat-3</Region>
-          </Item>          
+          </Item>
         </Frames>
-      </Item>      
+      </Item>
+      <Item>
+        <Name>focused-button-animation</Name>
+        <Delay>300</Delay>
+        <Frames>
+          <Item>
+            <Region>focused-button-1</Region>
+          </Item>
+          <Item>
+            <Region>focused-button-2</Region>
+          </Item>
+        </Frames>
+      </Item>
     </Animations>
   </Asset>
 </XnaContent>

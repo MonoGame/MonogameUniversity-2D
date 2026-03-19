@@ -117,5 +117,12 @@ public class InputManager
         // Don't to this"!
         return Keyboard.WasKeyJustPressed(Keys.OemMinus) || gamePadOne.IsButtonDown(Buttons.DPadDown);
     }
+
+    public bool PausedPressed()
+    {
+        var gamePadOne = GamePads[(int)PlayerIndex.One];
+
+        return Core.Input.Keyboard.WasKeyJustPressed(Keys.Escape) || gamePadOne.IsButtonDown(Buttons.Start);
+    }
 }
 
