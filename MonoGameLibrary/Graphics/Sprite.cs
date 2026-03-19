@@ -65,6 +65,7 @@ public class Sprite
     /// Width is calculated by multiplying the width of the source texture region by the x-axis scale factor.
     /// </remarks>
     public float Width => Region.Width * Scale.X;
+    public float HalfWidth => Width * 0.5f;
 
     /// <summary>
     /// Gets the height, in pixels, of this sprite.
@@ -73,6 +74,7 @@ public class Sprite
     /// Height is calculated by multiplying the height of the source texture region by the y-axis scale factor.
     /// </remarks>
     public float Height => Region.Height * Scale.Y;
+    public float HalfHeight => Height * 0.5f;
 
     /// <summary>
     /// Creates a new sprite.

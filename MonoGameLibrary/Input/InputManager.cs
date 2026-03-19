@@ -69,32 +69,40 @@ public class InputManager
     {
         var gamePadOne = GamePads[(int)PlayerIndex.One];
 
-        return Keyboard.IsKeyDown(Keys.A) || Keyboard.IsKeyDown(Keys.Left) ||
-                gamePadOne.IsButtonDown(Buttons.DPadUp);
+        return Keyboard.WasKeyJustPressed(Keys.A) ||
+               Keyboard.WasKeyJustPressed(Keys.Left) ||
+               gamePadOne.WasButtonJustPressed(Buttons.DPadUp) ||
+               gamePadOne.WasButtonJustPressed(Buttons.LeftThumbstickLeft);
     }
 
     public bool MoveRight()
     {
         var gamePadOne = GamePads[(int)PlayerIndex.One];
 
-        return Keyboard.IsKeyDown(Keys.D) || Keyboard.IsKeyDown(Keys.Right) ||
-                gamePadOne.IsButtonDown(Buttons.DPadRight);
+        return Keyboard.WasKeyJustPressed(Keys.D) || 
+               Keyboard.WasKeyJustPressed(Keys.Right) ||
+               gamePadOne.WasButtonJustPressed(Buttons.DPadRight) ||
+               gamePadOne.WasButtonJustPressed(Buttons.LeftThumbstickRight);
     }
 
     public bool MoveUp()
     {
         var gamePadOne = GamePads[(int)PlayerIndex.One];
 
-        return Keyboard.IsKeyDown(Keys.W) || Keyboard.IsKeyDown(Keys.Up) ||
-                gamePadOne.IsButtonDown(Buttons.DPadUp);
+        return Keyboard.WasKeyJustPressed(Keys.W) ||
+               Keyboard.WasKeyJustPressed(Keys.Up) ||
+               gamePadOne.WasButtonJustPressed(Buttons.DPadUp) ||
+               gamePadOne.WasButtonJustPressed(Buttons.DPadUp);
     }
 
     public bool MoveDown()
     {
         var gamePadOne = GamePads[(int)PlayerIndex.One];
 
-        return Keyboard.IsKeyDown(Keys.S) || Keyboard.IsKeyDown(Keys.Down) ||
-                gamePadOne.IsButtonDown(Buttons.DPadDown);
+        return Keyboard.WasKeyJustPressed(Keys.S) ||
+               Keyboard.WasKeyJustPressed(Keys.Down) ||
+               gamePadOne.WasButtonJustPressed(Buttons.DPadDown) ||
+               gamePadOne.WasButtonJustPressed(Buttons.DPadDown);
     }
 
     public bool PausePlayMusic()
@@ -124,5 +132,17 @@ public class InputManager
 
         return Core.Input.Keyboard.WasKeyJustPressed(Keys.Escape) || gamePadOne.IsButtonDown(Buttons.Start);
     }
+
+    /// <summary>
+    /// Returns true if the player has triggered the "action" button,
+    /// typically used for menu confirmation.
+    /// </summary>
+    public bool Action()
+    {
+        var gamePadOne = GamePads[(int)PlayerIndex.One];
+
+        return Core.Input.Keyboard.WasKeyJustPressed(Keys.Enter) ||
+               gamePadOne.WasButtonJustPressed(Buttons.A);
+    }    
 }
 
