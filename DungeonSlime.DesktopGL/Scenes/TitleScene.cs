@@ -279,7 +279,6 @@ public class TitleScene : Scene
         // Give the options button on the title panel focus since we are coming
         // back from the options screen.
         _titleScreenButtonsPanel.IsFocused = true;
-
     }
 
     #endregion OptionsPanel
