@@ -280,8 +280,6 @@ public class TitleScene : Scene
         // back from the options screen.
         _titleScreenButtonsPanel.IsFocused = true;
 
-        // // Set the options panel to be invisible.
-        // _optionsPanel.IsVisible = false;
     }
 
     #endregion OptionsPanel

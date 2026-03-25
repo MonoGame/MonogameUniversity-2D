@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch DungeonSlime DesktopGL",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/DungeonSlime.DesktopGL/bin/Debug/net9.0/DungeonSlime.DesktopGL.dll",
+      "cwd": "${workspaceFolder}/DungeonSlime.DesktopGL",
+      "stopAtEntry": false,
+      "console": "internalConsole"
+    }
+  ]
+}
