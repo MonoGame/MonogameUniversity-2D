@@ -101,7 +101,6 @@ public class TitleScene : Scene
         GumService.Default.Root.Children.Clear();
 
         CreateTitlePanel();
-        CreateOptionsPanel();
     }
 
 
@@ -159,9 +158,10 @@ public class TitleScene : Scene
         // A UI interaction occurred, play the sound effect
         Core.Audio.PlaySoundEffect(_uiSoundEffect);
 
-        // Set the title panel to be invisible.
-        _titleScreenButtonsPanel.IsVisible = false;
+        // Remove Title Screen to prevent it from grab
+        GumService.Default.Root.Children.Clear();
 
+        CreateOptionsPanel();
         // Set the options panel to be visible.
         _optionsPanel.IsVisible = true;
 
@@ -268,6 +268,11 @@ public class TitleScene : Scene
         // A UI interaction occurred, play the sound effect
         Core.Audio.PlaySoundEffect(_uiSoundEffect);
 
+        GumService.Default.Root.Children.Clear();
+
+        // Add the title panel back when navigating back.
+        CreateTitlePanel();
+
         // Set the title panel to be visible.
         _titleScreenButtonsPanel.IsVisible = true;
 
@@ -275,8 +280,8 @@ public class TitleScene : Scene
         // back from the options screen.
         _titleScreenButtonsPanel.IsFocused = true;
 
-        // Set the options panel to be invisible.
-        _optionsPanel.IsVisible = false;
+        // // Set the options panel to be invisible.
+        // _optionsPanel.IsVisible = false;
     }
 
     #endregion OptionsPanel
