@@ -158,7 +158,7 @@ public class TitleScene : Scene
         // A UI interaction occurred, play the sound effect
         Core.Audio.PlaySoundEffect(_uiSoundEffect);
 
-        // Remove Title Screen to prevent it from grab
+        // Remove Title Screen to prevent it from grabbing focus, prior to adding the options panel.
         GumService.Default.Root.Children.Clear();
 
         CreateOptionsPanel();
