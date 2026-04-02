@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using MonoGameLibrary;
@@ -36,6 +37,12 @@ public class Slime
     /// has collided with a body segment.
     /// </summary>
     public event EventHandler BodyCollision;
+    // Buffer to queue inputs input by player during input polling.
+    private Queue<Vector2> _inputBuffer;
+
+    // The maximum size of the buffer queue.
+    private const int MAX_BUFFER_SIZE = 2;
+
 
     /// <summary>
     /// Creates a new Slime using the specified animated sprite.
@@ -74,11 +81,13 @@ public class Slime
 
         // Zero out the movement timer.
         _movementTimer = TimeSpan.Zero;
+        // initialize the input buffer.
+        _inputBuffer = new Queue<Vector2>(MAX_BUFFER_SIZE);
     }
 
     private void HandleInput()
     {
-        Vector2 potentialNextDirection = _nextDirection;
+        Vector2 potentialNextDirection = Vector2.Zero;
 
         if (Core.Input.MoveUp())
         {
@@ -97,17 +106,33 @@ public class Slime
             potentialNextDirection = Vector2.UnitX;
         }
 
-        // Only allow direction change if it is not reversing the current
-        // direction.  This prevents the slime from backing into itself.
-        float dot = Vector2.Dot(potentialNextDirection, _segments[0].Direction);
-        if (dot >= 0)
+        // If a new direction was input, consider adding it to the buffer
+        if (potentialNextDirection != Vector2.Zero && _inputBuffer.Count < MAX_BUFFER_SIZE)
         {
-            _nextDirection = potentialNextDirection;
+            // If the buffer is empty, validate against the current direction;
+            // otherwise, validate against the last buffered direction
+            Vector2 validateAgainst = _inputBuffer.Count > 0 ?
+                                      _inputBuffer.Last() :
+                                      _segments[0].Direction;
+
+            // Only allow direction change if it is not reversing the current
+            // direction.  This prevents th slime from backing into itself
+            float dot = Vector2.Dot(potentialNextDirection, validateAgainst);
+            if (dot >= 0)
+            {
+                _inputBuffer.Enqueue(potentialNextDirection);
+            }
         }
     }
 
     private void Move()
     {
+        // Get the next direction from the input buffer if one is available
+        if (_inputBuffer.Count > 0)
+        {
+            _nextDirection = _inputBuffer.Dequeue();
+        }
+        
         // Capture the value of the head segment
         SlimeSegment head = _segments[0];
 
