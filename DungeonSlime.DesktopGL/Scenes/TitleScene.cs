@@ -18,7 +18,6 @@ public class TitleScene : Scene
 {
     private const string DUNGEON_TEXT = "Dungeon";
     private const string SLIME_TEXT = "Slime";
-    private const string PRESS_ENTER_TEXT = "Press Enter To Start";
 
     // The font to use to render normal text.
     private SpriteFont _font;
@@ -37,12 +36,6 @@ public class TitleScene : Scene
 
     // The origin to set for the slime text.
     private Vector2 _slimeTextOrigin;
-
-    // The position to draw the press enter text at.
-    private Vector2 _pressEnterPos;
-
-    // The origin to set for the press enter text when drawing it.
-    private Vector2 _pressEnterOrigin;
 
     // The texture used for the background pattern.
     private Texture2D _backgroundPattern;
@@ -91,11 +84,6 @@ public class TitleScene : Scene
         _slimeTextPos = new Vector2(757, 207);
         _slimeTextOrigin = size * 0.5f;
 
-        // Set the position and origin for the press enter text.
-        size = _font.MeasureString(PRESS_ENTER_TEXT);
-        _pressEnterPos = new Vector2(640, 620);
-        _pressEnterOrigin = size * 0.5f;
-
         // Initialize the offset of the background pattern at zero.
         _backgroundOffset = Vector2.Zero;
 
@@ -113,7 +101,6 @@ public class TitleScene : Scene
         GumService.Default.Root.Children.Clear();
 
         CreateTitlePanel();
-        CreateOptionsPanel();
     }
 
 
@@ -171,9 +158,10 @@ public class TitleScene : Scene
         // A UI interaction occurred, play the sound effect
         Core.Audio.PlaySoundEffect(_uiSoundEffect);
 
-        // Set the title panel to be invisible.
-        _titleScreenButtonsPanel.IsVisible = false;
+        // Remove Title Screen to prevent it from grabbing focus, prior to adding the options panel.
+        GumService.Default.Root.Children.Clear();
 
+        CreateOptionsPanel();
         // Set the options panel to be visible.
         _optionsPanel.IsVisible = true;
 
@@ -280,15 +268,17 @@ public class TitleScene : Scene
         // A UI interaction occurred, play the sound effect
         Core.Audio.PlaySoundEffect(_uiSoundEffect);
 
+        GumService.Default.Root.Children.Clear();
+
+        // Add the title panel back when navigating back.
+        CreateTitlePanel();
+
         // Set the title panel to be visible.
         _titleScreenButtonsPanel.IsVisible = true;
 
         // Give the options button on the title panel focus since we are coming
         // back from the options screen.
         _titleScreenButtonsPanel.IsFocused = true;
-
-        // Set the options panel to be invisible.
-        _optionsPanel.IsVisible = false;
     }
 
     #endregion OptionsPanel
@@ -304,12 +294,6 @@ public class TitleScene : Scene
 
     public override void Update(GameTime gameTime)
     {
-        // If the user presses enter, switch to the game scene.
-        if (Core.Input.Keyboard.WasKeyJustPressed(Keys.Enter))
-        {
-            Core.ChangeScene(new GameScene());
-        }
-
         // P or Start
         if (Core.Input.PausePlayMusic())
         {
@@ -358,9 +342,6 @@ public class TitleScene : Scene
 
         // Draw the Slime text on top of that at its original position.
         Core.SpriteBatch.DrawString(_font5x, SLIME_TEXT, _slimeTextPos, Color.White, 0.0f, _slimeTextOrigin, 1.0f, SpriteEffects.None, 1.0f);
-
-        // Draw the press enter text.
-        Core.SpriteBatch.DrawString(_font, PRESS_ENTER_TEXT, _pressEnterPos, Color.White, 0.0f, _pressEnterOrigin, 1.0f, SpriteEffects.None, 0.0f);
 
         // Always end the sprite batch when finished.
         Core.SpriteBatch.End();
