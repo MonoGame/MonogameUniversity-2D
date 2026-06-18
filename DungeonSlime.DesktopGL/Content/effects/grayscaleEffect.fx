@@ -9,7 +9,7 @@
 
 // A value between 0 and 1 that controls the intensity of the grayscale effect.
 // 0 = full color, 1 = full grayscale.
-float Saturation = 1.0;
+float Saturation = 0.9f;
 
 Texture2D SpriteTexture;
 
@@ -39,6 +39,9 @@ float4 MainPS(VertexShaderOutput input) : COLOR
     // Linear interpolation between he grayscale color and the original color's
     // rgb values based on the saturation parameter.
     float3 finalColor = lerp(grayscale, color.rgb, Saturation);
+
+    // modify the final color, just for debug visualization
+    finalColor *= float3(1, 0, 0);
 
     // Return the final color with the original alpha value.
     return float4(finalColor, color.a);

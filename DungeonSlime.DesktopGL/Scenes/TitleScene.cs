@@ -88,7 +88,7 @@ public class TitleScene : Scene
 
         // Set the position and origin for the Slime text.
         size = _font5x.MeasureString(SLIME_TEXT);
-        _slimeTextPos = new Vector2(757, 207);
+        _slimeTextPos = new Vector2(757, 150);
         _slimeTextOrigin = size * 0.5f;
 
         // Set the position and origin for the press enter text.
