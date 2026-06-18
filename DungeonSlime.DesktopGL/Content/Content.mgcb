@@ -38,6 +38,12 @@
 /processorParam:Quality=Best
 /build:audio/ui.wav
 
+#begin effects/grayscaleEffect.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:effects/grayscaleEffect.fx
+
 #begin fonts/04B_30_5x.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
