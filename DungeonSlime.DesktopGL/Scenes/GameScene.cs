@@ -46,7 +46,7 @@ public class GameScene : Scene
     private TextureAtlas _atlas;
     private TextureAtlasData _atlasData;
     // The grayscale shader effect.
-    private WatchedAsset<Effect> _grayscaleEffect;
+    private Material _grayscaleEffect;
 
     // The amount of saturation to provide the grayscale shader effect.
     private float _saturation = 1.0f;
@@ -171,13 +171,14 @@ public class GameScene : Scene
         _collectSoundEffect = Content.Load<SoundEffect>("audio/collect");
 
         // Load the grayscale effect.
-        _grayscaleEffect = Content.Watch<Effect>("effects/grayscaleEffect");
+        _grayscaleEffect = Content.WatchMaterial("effects/grayscaleEffect");
+        _grayscaleEffect.SetParameter("Saturation", 1);
     }
 
     public override void Update(GameTime gameTime)
     {
-        // Update the grayscale effect if it was changed  
-        _grayscaleEffect.TryRefresh(out _);
+        // Update the grayscale effect if it was changed
+        _grayscaleEffect.Update();
 
         // Ensure the UI is always updated.
         _ui.Update(gameTime);
@@ -412,11 +413,11 @@ public class GameScene : Scene
 
         if (_state != GameState.Playing)
         {
-            // We are in a game over state, so apply the saturation parameter.
-            _grayscaleEffect.Asset.Parameters["Saturation"].SetValue(_saturation);
+            // We are in a game over state, so apply the saturation parameter.  
+            _grayscaleEffect.SetParameter("Saturation", _saturation);
 
             // And begin the sprite batch using the grayscale effect.
-            Core.SpriteBatch.Begin(samplerState: SamplerState.PointClamp, effect: _grayscaleEffect.Asset);
+            Core.SpriteBatch.Begin(samplerState: SamplerState.PointClamp, effect: _grayscaleEffect.Effect);
         }
         else
         {
@@ -425,7 +426,8 @@ public class GameScene : Scene
         }
         // Draw the tilemap
         _tilemap.Draw(Core.SpriteBatch);
-        _grayscaleEffect.Asset.Parameters["Saturation"].SetValue(2);
+        // We are in a game over state, so apply the saturation parameter.  
+        _grayscaleEffect.SetParameter("Saturation", _saturation);
 
         // Draw the slime.
         _slime.Draw();
