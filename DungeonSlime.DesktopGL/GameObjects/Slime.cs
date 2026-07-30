@@ -43,6 +43,9 @@ public class Slime
     // The maximum size of the buffer queue.
     private const int MAX_BUFFER_SIZE = 2;
 
+    // The size of the slime
+    public int Size => _segments.Count;
+
 
     /// <summary>
     /// Creates a new Slime using the specified animated sprite.
@@ -132,7 +135,7 @@ public class Slime
         {
             _nextDirection = _inputBuffer.Dequeue();
         }
-        
+
         // Capture the value of the head segment
         SlimeSegment head = _segments[0];
 
@@ -222,21 +225,26 @@ public class Slime
     /// <summary>
     /// Draws the slime.
     /// </summary>
-    public void Draw()
+    public void Draw(Action<int> configureSpriteBatch)
     {
         // Iterate through each segment and draw it
-        foreach (SlimeSegment segment in _segments)
+        for (var i = 0; i < _segments.Count; i++)
         {
+            var segment = _segments[i];
             // Calculate the visual position of the segment at the moment by
-            // larping between its "at" and "to" position by the movement
+            // lerping between its "at" and "to" position by the movement
             // offset lerp amount
             Vector2 pos = Vector2.Lerp(segment.At, segment.To, _movementProgress);
+
+            // Allow the sprite batch to be configured before each call.
+            configureSpriteBatch(i);
 
             // Draw the slime sprite at the calculated visual position of this
             // segment
             _sprite.Draw(Core.SpriteBatch, pos);
         }
     }
+
 
     /// <summary>
     /// Returns a Circle value that represents collision bounds of the slime.

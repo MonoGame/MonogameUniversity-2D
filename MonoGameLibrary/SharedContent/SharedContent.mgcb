@@ -1,86 +1,35 @@
 
 #----------------------------- Global Properties ----------------------------#
 
-/outputDir:bin/$(Platform)
-/intermediateDir:obj/$(Platform)
-/platform:DesktopGL
+/outputDir:bin
+/intermediateDir:obj
+/platform:Windows
 /config:
 /profile:HiDef
 /compress:False
 
 #-------------------------------- References --------------------------------#
 
-/reference:..\..\ContentTypes\bin\Debug\net8.0\ContentTypes.dll
 
 #---------------------------------- Content ---------------------------------#
 
-#begin audio/bounce.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:audio/bounce.wav
-
-#begin audio/collect.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:audio/collect.wav
-
-#begin audio/theme.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:audio/theme.ogg
-
-#begin audio/ui.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/processorParam:Version=3.8.5.0
-/build:audio/ui.wav
-
-#begin effects/EffectFile.fx
+#begin effects/colorSwapEffect.fx
 /importer:EffectImporter
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
 /processorParam:Defines=
 /processorParam:Version=3.8.5.0
-/build:effects/EffectFile.fx
+/build:effects/colorSwapEffect.fx
 
-#begin effects/grayscaleEffect.fx
+#begin effects/sceneTransitionEffect.fx
 /importer:EffectImporter
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
 /processorParam:Defines=
 /processorParam:Version=3.8.5.0
-/build:effects/grayscaleEffect.fx
+/build:effects/sceneTransitionEffect.fx
 
-#begin fonts/04B_30_5x.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/processorParam:Version=3.8.5.0
-/build:fonts/04B_30_5x.spritefont
-
-#begin fonts/04b_30.fnt
-/copy:fonts/04b_30.fnt
-
-#begin fonts/04B_30.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/processorParam:Version=3.8.5.0
-/build:fonts/04B_30.spritefont
-
-#begin images/atlas-definition.xml
-/copy:images/atlas-definition.xml
-
-#begin images/atlas.png
+#begin images/angled.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -91,9 +40,9 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /processorParam:Version=3.8.5.0
-/build:images/atlas.png
+/build:images/angled.png
 
-#begin images/background-pattern.png
+#begin images/concave.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -104,9 +53,9 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /processorParam:Version=3.8.5.0
-/build:images/background-pattern.png
+/build:images/concave.png
 
-#begin images/color-map-1.png
+#begin images/radial.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -117,9 +66,9 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /processorParam:Version=3.8.5.0
-/build:images/color-map-1.png
+/build:images/radial.png
 
-#begin images/logo.png
+#begin images/ripple.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -130,14 +79,5 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /processorParam:Version=3.8.5.0
-/build:images/logo.png
-
-#begin images/tilemap-definition.xml
-/copy:images/tilemap-definition.xml
-
-#begin TextureAtlasXML.xml
-/importer:XmlImporter
-/processor:PassThroughProcessor
-/processorParam:Version=3.8.5.0
-/build:TextureAtlasXML.xml
+/build:images/ripple.png
 
