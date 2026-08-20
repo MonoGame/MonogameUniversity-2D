@@ -50,6 +50,14 @@
 /processorParam:Version=3.8.5.0
 /build:effects/EffectFile.fx
 
+#begin effects/gameEffect.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/processorParam:Defines=
+/processorParam:Version=3.8.5.0
+/build:effects/gameEffect.fx
+
 #begin effects/grayscaleEffect.fx
 /importer:EffectImporter
 /processor:EffectProcessor
@@ -118,6 +126,45 @@
 /processorParam:TextureFormat=Color
 /processorParam:Version=3.8.5.0
 /build:images/color-map-1.png
+
+#begin images/color-map-dark-purple.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
+/build:images/color-map-dark-purple.png
+
+#begin images/color-map-green.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
+/build:images/color-map-green.png
+
+#begin images/color-map-pink.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
+/build:images/color-map-pink.png
 
 #begin images/logo.png
 /importer:TextureImporter

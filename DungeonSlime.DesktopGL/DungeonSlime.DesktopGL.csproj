@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup Condition="'$(OnlyWatchContentFiles)'=='true'">
     <!-- Adds .fx files to the `dotnet watch`'s file scope -->
-     <Watch Include="../**/*.fx;" />
+     <Watch Include="../**/*.fx;../**/*.fxh" />
     <!-- Removes the .cs files from `dotnet watch`'s compile scope -->
     <Compile Update="**/*.cs" Watch="false" />
   </ItemGroup>

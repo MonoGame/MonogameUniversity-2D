@@ -11,6 +11,7 @@ using MonoGameGum.GueDeriving;
 using MonoGameLibrary;
 using MonoGameLibrary.Graphics;
 using MonoGameLibrary.Scenes;
+using MonoGameLibrary.Content;
 
 namespace DungeonSlime.Scenes;
 
@@ -66,6 +67,10 @@ public class TitleScene : Scene
 
     // The back button used to exit the options menu back to the title menu.
     private AnimatedButton _optionsBackButton;
+
+    // The 3d material  
+    private Material _3dMaterial;
+
 
     // Reference to the texture atlas that we can pass to UI elements when they
     // are created.
@@ -136,7 +141,15 @@ public class TitleScene : Scene
         // Create the texture atlas from the XML configuration file
         _atlas = TextureAtlas.FromAtlasData(Content, _atlasData);
 
+        // Load the 3d effect 
+        _3dMaterial = Core.SharedContent.WatchMaterial("effects/3dEffect");
+        _3dMaterial.IsDebugVisible = true;
+
+        var camera = new SpriteCamera3d();
+        _3dMaterial.SetParameter("MatrixTransform", camera.CalculateMatrixTransform());
+        _3dMaterial.SetParameter("ScreenSize", new Vector2(Core.GraphicsDevice.Viewport.Width, Core.GraphicsDevice.Viewport.Height));
     }
+
     #region TitlePanel
     private void CreateTitlePanel()
     {
@@ -304,6 +317,13 @@ public class TitleScene : Scene
 
     public override void Update(GameTime gameTime)
     {
+        // Enable hot reload
+        _3dMaterial.Update();
+
+        var spinAmount = Core.Input.Mouse.X / (float)Core.GraphicsDevice.Viewport.Width;
+        spinAmount = MathHelper.SmoothStep(-.1f, .1f, spinAmount);
+        _3dMaterial.SetParameter("SpinAmount", spinAmount);
+
         // If the user presses enter, switch to the game scene.
         if (Core.Input.Keyboard.WasKeyJustPressed(Keys.Enter))
         {
@@ -339,32 +359,6 @@ public class TitleScene : Scene
         Core.SpriteBatch.Draw(_backgroundPattern, _backgroundDestination, new Rectangle(_backgroundOffset.ToPoint(), _backgroundDestination.Size), Color.White * 0.5f);
         Core.SpriteBatch.End();
 
-        // Begin the sprite batch to prepare for rendering.
-        Core.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
-
-        // The color to use for the drop shadow text.
-        Color dropShadowColor = Color.Black * 0.5f;
-
-        // Draw the Dungeon text slightly offset from it is original position and
-        // with a transparent color to give it a drop shadow.
-        Core.SpriteBatch.DrawString(_font5x, DUNGEON_TEXT, _dungeonTextPos + new Vector2(10, 10), dropShadowColor, 0.0f, _dungeonTextOrigin, 1.0f, SpriteEffects.None, 1.0f);
-
-        // Draw the Dungeon text on top of that at its original position.
-        Core.SpriteBatch.DrawString(_font5x, DUNGEON_TEXT, _dungeonTextPos, Color.White, 0.0f, _dungeonTextOrigin, 1.0f, SpriteEffects.None, 1.0f);
-
-        // Draw the Slime text slightly offset from it is original position and
-        // with a transparent color to give it a drop shadow.
-        Core.SpriteBatch.DrawString(_font5x, SLIME_TEXT, _slimeTextPos + new Vector2(10, 10), dropShadowColor, 0.0f, _slimeTextOrigin, 1.0f, SpriteEffects.None, 1.0f);
-
-        // Draw the Slime text on top of that at its original position.
-        Core.SpriteBatch.DrawString(_font5x, SLIME_TEXT, _slimeTextPos, Color.White, 0.0f, _slimeTextOrigin, 1.0f, SpriteEffects.None, 1.0f);
-
-        // Draw the press enter text.
-        Core.SpriteBatch.DrawString(_font, PRESS_ENTER_TEXT, _pressEnterPos, Color.White, 0.0f, _pressEnterOrigin, 1.0f, SpriteEffects.None, 0.0f);
-
-        // Always end the sprite batch when finished.
-        Core.SpriteBatch.End();
-
         DrawUI();
     }
 
@@ -373,7 +367,10 @@ public class TitleScene : Scene
         if (_titleScreenButtonsPanel.IsVisible)
         {
             // Begin the sprite batch to prepare for rendering.
-            Core.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            Core.SpriteBatch.Begin(
+                samplerState: SamplerState.PointClamp,
+                rasterizerState: RasterizerState.CullNone,
+                effect: _3dMaterial.Effect);
 
             // The color to use for the drop shadow text.
             Color dropShadowColor = Color.Black * 0.5f;

@@ -13,6 +13,14 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin effects/3dEffect.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/processorParam:Defines=
+/processorParam:Version=3.8.5.0
+/build:effects/3dEffect.fx
+
 #begin effects/colorSwapEffect.fx
 /importer:EffectImporter
 /processor:EffectProcessor
@@ -20,6 +28,14 @@
 /processorParam:Defines=
 /processorParam:Version=3.8.5.0
 /build:effects/colorSwapEffect.fx
+
+#begin effects/Sample3D.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/processorParam:Defines=
+/processorParam:Version=3.8.5.0
+/build:effects/Sample3D.fx
 
 #begin effects/sceneTransitionEffect.fx
 /importer:EffectImporter
