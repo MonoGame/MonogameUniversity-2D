@@ -6,6 +6,7 @@ using DungeonSlime.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using MonoGameGum;
 using MonoGameLibrary;
 using MonoGameLibrary.Content;
@@ -22,6 +23,9 @@ public class GameScene : Scene
         Paused,
         GameOver
     }
+
+    // The deferred rendering resources  
+    private DeferredRenderer _deferredRenderer;
 
     // Reference to the slime.
     private Slime _slime;
@@ -47,6 +51,9 @@ public class GameScene : Scene
     private TextureAtlas _atlas;
     private TextureAtlasData _atlasData;
 
+    // The normal texture atlas  
+    private Texture2D _normalAtlas;
+
     // The amount of saturation to provide the grayscale shader effect.
     private float _saturation = 1.0f;
 
@@ -60,10 +67,16 @@ public class GameScene : Scene
     private Material _gameMaterial;
     private SpriteCamera3d _camera;
 
+    // A list of point lights to be rendered  
+    private List<PointLight> _lights = new List<PointLight>();
+
     public override void Initialize()
     {
         // LoadContent is called during base.Initialize().
         base.Initialize();
+
+        // Create the deferred rendering resources  
+        _deferredRenderer = new DeferredRenderer();
 
         // During the game scene, we want to disable exit on escape. Instead,
         // the escape key will be used to return back to the title screen.
@@ -89,6 +102,9 @@ public class GameScene : Scene
 
         // Initialize a new game to be played.
         InitializeNewGame();
+
+        // With this new call to initialize lights for the scene
+        InitializeLights();
     }
 
     private void InitializeUI()
@@ -105,6 +121,53 @@ public class GameScene : Scene
         _ui.RetryButtonClick += OnRetryButtonClicked;
         _ui.QuitButtonClick += OnQuitButtonClicked;
     }
+
+    private void InitializeLights()
+    {
+        // torch 1
+        _lights.Add(new PointLight
+        {
+            Position = new Vector2(260, 100),
+            Color = Color.CornflowerBlue,
+            Radius = 500
+        });
+        // torch 2
+        _lights.Add(new PointLight
+        {
+            Position = new Vector2(520, 100),
+            Color = Color.CornflowerBlue,
+            Radius = 500
+        });
+        // torch 3
+        _lights.Add(new PointLight
+        {
+            Position = new Vector2(740, 100),
+            Color = Color.CornflowerBlue,
+            Radius = 500
+        });
+        // torch 4
+        _lights.Add(new PointLight
+        {
+            Position = new Vector2(1000, 100),
+            Color = Color.CornflowerBlue,
+            Radius = 500
+        });
+
+        // random lights
+        _lights.Add(new PointLight
+        {
+            Position = new Vector2(Random.Shared.Next(50, 400), 400),
+            Color = Color.MonoGameOrange,
+            Radius = 500
+        });
+        _lights.Add(new PointLight
+        {
+            Position = new Vector2(Random.Shared.Next(650, 1200), 300),
+            Color = Color.MonoGameOrange,
+            Radius = 500
+        });
+    }
+
 
     private void OnResumeButtonClicked(object sender, EventArgs args)
     {
@@ -185,20 +248,31 @@ public class GameScene : Scene
             [32] = Color.LightSteelBlue,
         }, false);
 
+        // Load the normal maps  
+        _normalAtlas = Content.Load<Texture2D>("images/atlas-normal");
+
         // Load the game material
         _gameMaterial = Content.WatchMaterial("effects/gameEffect");
-        _gameMaterial.IsDebugVisible = true;
+        _gameMaterial.IsDebugVisible = false;
         _gameMaterial.SetParameter("ColorMap", _colorMap);
         _camera = new SpriteCamera3d();
         _gameMaterial.SetParameter("MatrixTransform", _camera.CalculateMatrixTransform());
         _gameMaterial.SetParameter("ScreenSize", new Vector2(Core.GraphicsDevice.Viewport.Width, Core.GraphicsDevice.Viewport.Height));
+        _gameMaterial.SetParameter("NormalMap", _normalAtlas);
     }
+
+    private bool _debugPause = false;
 
     public override void Update(GameTime gameTime)
     {
         // Update the colorSwap material if it was changed
         _gameMaterial.Update();
 
+        if (Core.Input.Keyboard.WasKeyJustPressed(Keys.P))
+        {
+            _debugPause = !_debugPause;
+        }
+        if (_debugPause) return;
 
         // Debug
         //return; // Remove this line to enable the game update logic
@@ -212,7 +286,12 @@ public class GameScene : Scene
         var slimePosition = new Vector2(_slime?.GetBounds().X ?? center.X, _slime?.GetBounds().Y ?? center.Y);
         var offset = .01f * (slimePosition - center);
         _camera.LookOffset = offset;
-        _gameMaterial.SetParameter("MatrixTransform", _camera.CalculateMatrixTransform());
+        //_gameMaterial.SetParameter("MatrixTransform", _camera.CalculateMatrixTransform());
+
+        var matrixTransform = _camera.CalculateMatrixTransform();
+        _gameMaterial.SetParameter("MatrixTransform", matrixTransform);
+        Core.PointLightMaterial.SetParameter("MatrixTransform", matrixTransform);
+        Core.PointLightMaterial.SetParameter("ScreenSize", new Vector2(Core.GraphicsDevice.Viewport.Width, Core.GraphicsDevice.Viewport.Height));
 
         if (_state != GameState.Playing)
         {
@@ -256,9 +335,11 @@ public class GameScene : Scene
         // Update the bat.
         _bat.Update(gameTime);
 
-        // Perform collision checks.
         // Perform collision checks
         CollisionChecks(gameTime);
+
+        // Move some lights around for artistic effect  
+        MoveLightsAround(gameTime);
     }
 
     private void CollisionChecks(GameTime gameTime)
@@ -325,6 +406,19 @@ public class GameScene : Scene
         {
             _bat.Bounce(-Vector2.UnitX);
         }
+    }
+
+    private void MoveLightsAround(GameTime gameTime)
+    {
+        var t = (float)gameTime.TotalGameTime.TotalSeconds * .25f;
+        var bounds = Core.GraphicsDevice.Viewport.Bounds;
+        bounds.Inflate(-100, -100);
+
+        var halfWidth = bounds.Width / 2;
+        var halfHeight = bounds.Height / 2;
+        var center = new Vector2(halfWidth, halfHeight);
+        _lights[^1].Position = center + new Vector2(halfWidth * MathF.Cos(t), .7f * halfHeight * MathF.Sin(t * 1.1f));
+        _lights[^2].Position = center + new Vector2(halfWidth * MathF.Cos(t + MathHelper.Pi), halfHeight * MathF.Sin(t - MathHelper.Pi));
     }
 
     private void PositionBatAwayFromSlime()
@@ -448,7 +542,8 @@ public class GameScene : Scene
     {
         // Clear the back buffer.
         Core.GraphicsDevice.Clear(Color.CornflowerBlue);
-
+        // Start rendering to the deferred renderer
+        _deferredRenderer.StartColorPhase();
         if (_state != GameState.Playing)
         {
             // We are in a game over state, so apply the saturation parameter.  
@@ -491,8 +586,19 @@ public class GameScene : Scene
         // Always end the sprite batch when finished.
         Core.SpriteBatch.End();
 
+        // start rendering the lights  
+        _deferredRenderer.StartLightPhase();
+
+        PointLight.Draw(Core.SpriteBatch, _lights, _deferredRenderer.NormalBuffer);
+
+        _deferredRenderer.Finish();
+        _deferredRenderer.DrawComposite();
+
         // Draw the UI.
         _ui.Draw();
+
+        // Render the debug view for the game  
+        //_deferredRenderer.DebugDraw();
     }
 
 }

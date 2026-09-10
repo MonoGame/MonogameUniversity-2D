@@ -94,6 +94,17 @@ public class Core : Game
     /// </summary>  
     public static ContentManager SharedContent { get; private set; }
 
+    /// <summary>  
+    /// The material that draws point lights  
+    /// </summary>  
+    public static Material PointLightMaterial { get; private set; }
+
+    /// <summary>  
+    /// The material that combines the various off screen textures  
+    /// </summary>  
+    public static Material DeferredCompositeMaterial { get; private set; }
+
+
     /// <summary>
     /// Creates a new Core instance.
     /// </summary>
@@ -188,6 +199,14 @@ public class Core : Game
             SharedContent.Load<Texture2D>("images/radial"),
             SharedContent.Load<Texture2D>("images/ripple"),
         ];
+
+        PointLightMaterial = SharedContent.WatchMaterial("effects/pointLightEffect");
+        PointLightMaterial.SetParameter("LightBrightness", .25f);
+        PointLightMaterial.SetParameter("LightSharpness", .1f);
+        PointLightMaterial.IsDebugVisible = false;
+
+        DeferredCompositeMaterial = SharedContent.WatchMaterial("effects/deferredCompositeEffect");
+        DeferredCompositeMaterial.IsDebugVisible = true;
     }
 
 
@@ -203,6 +222,10 @@ public class Core : Game
     {
         // Check if the scene transition material needs to be reloaded.
         SceneTransitionMaterial.Update();
+
+        PointLightMaterial.Update();
+
+        DeferredCompositeMaterial.Update();
 
         // Update the input manager.
         Input.Update(gameTime);

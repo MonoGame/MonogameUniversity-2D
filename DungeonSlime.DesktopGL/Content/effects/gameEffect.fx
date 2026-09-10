@@ -14,14 +14,39 @@ sampler2D SpriteTextureSampler = sampler_state
     Texture = <SpriteTexture>;
 };
 
+Texture2D NormalMap;  
+sampler2D NormalMapSampler = sampler_state  
+{  
+   Texture = <NormalMap>;  
+};
+
+
+struct PixelShaderOutput {  
+    float4 color: COLOR0;  
+    float4 normal: COLOR1;  
+};
+
+
 #include "../../../MonoGameLibrary/SharedContent/effects/3dEffect.fxh"
 #include "../../../MonoGameLibrary/SharedContent/effects/colors.fxh"
+
+PixelShaderOutput MainPS(VertexShaderOutput input)  
+{  
+    PixelShaderOutput output;
+    output.color = ColorSwapPS(input);
+
+    // read the normal data from the NormalMap
+    float4 normal = tex2D(NormalMapSampler,input.TextureCoordinates);  
+    output.normal = normal;
+
+    return output;  
+}
 
 technique SpriteDrawing
 {
     pass P0
     {
         VertexShader = compile VS_SHADERMODEL MainVS();
-        PixelShader = compile PS_SHADERMODEL ColorSwapPS();
+        PixelShader = compile PS_SHADERMODEL MainPS();
     }
 };

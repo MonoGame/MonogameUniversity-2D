@@ -29,6 +29,22 @@
 /processorParam:Version=3.8.5.0
 /build:effects/colorSwapEffect.fx
 
+#begin effects/deferredCompositeEffect.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/processorParam:Defines=
+/processorParam:Version=3.8.5.0
+/build:effects/deferredCompositeEffect.fx
+
+#begin effects/pointLightEffect.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/processorParam:Defines=
+/processorParam:Version=3.8.5.0
+/build:effects/pointLightEffect.fx
+
 #begin effects/Sample3D.fx
 /importer:EffectImporter
 /processor:EffectProcessor

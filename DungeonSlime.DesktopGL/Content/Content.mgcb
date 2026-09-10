@@ -88,6 +88,19 @@
 #begin images/atlas-definition.xml
 /copy:images/atlas-definition.xml
 
+#begin images/atlas-normal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/processorParam:Version=3.8.5.0
+/build:images/atlas-normal.png
+
 #begin images/atlas.png
 /importer:TextureImporter
 /processor:TextureProcessor
